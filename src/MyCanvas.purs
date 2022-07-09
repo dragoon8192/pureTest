@@ -1,7 +1,6 @@
-module MyCanvas where
+module MyCanvas (component) where
 
 import Prelude
-
 import CSS
 import Graphics.Canvas as Canvas
 import Halogen as H
@@ -11,10 +10,10 @@ import Halogen.HTML.Events as HE
 data Action = Increment | Decrement
 
 component =
-  H.mkComponent
-    { initialState
-    , render
-    , eval: H.mkEval $ H.defaultEval { handleAction = handleAction }
+  H.mkComponent {
+    initialState, render
+    , eval: H.mkEval $ H.defaultEval
+      { handleAction = handleAction }
     }
   where
   initialState _ = 0
