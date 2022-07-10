@@ -19,8 +19,12 @@ to generate this file without the comments in this block.
   , "effect"
   , "halogen"
   , "halogen-css"
+  , "halogen-subscriptions"
   , "maybe"
+  , "numbers"
   , "prelude"
+  , "tailrec"
+  , "tuples"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

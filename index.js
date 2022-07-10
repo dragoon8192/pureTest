@@ -102,6 +102,11 @@
       };
     };
   };
+  var voidRight = function(dictFunctor) {
+    return function(x) {
+      return map(dictFunctor)($$const(x));
+    };
+  };
   var functorArray = {
     map: arrayMap
   };
@@ -120,6 +125,15 @@
     return function(a2) {
       return function(b2) {
         return apply(dictApply)(map(dictApply.Functor0())($$const(identity(categoryFn)))(a2))(b2);
+      };
+    };
+  };
+  var lift2 = function(dictApply) {
+    return function(f) {
+      return function(a2) {
+        return function(b2) {
+          return apply(dictApply)(map(dictApply.Functor0())(f)(a2))(b2);
+        };
       };
     };
   };
@@ -1089,10 +1103,10 @@
     return function(right, ms) {
       return Aff.Async(function(cb) {
         return function() {
-          var timer = setDelay(ms, cb(right()));
+          var timer2 = setDelay(ms, cb(right()));
           return function() {
             return Aff.Sync(function() {
-              return right(clearDelay(ms, timer));
+              return right(clearDelay(ms, timer2));
             });
           };
         };
@@ -1135,6 +1149,13 @@
   };
 
   // output/Data.Semigroup/index.js
+  var semigroupUnit = {
+    append: function(v) {
+      return function(v1) {
+        return unit;
+      };
+    }
+  };
   var semigroupArray = {
     append: concatArray
   };
@@ -1207,6 +1228,38 @@
     EQ2.value = new EQ2();
     return EQ2;
   }();
+
+  // output/Data.Semiring/foreign.js
+  var numAdd = function(n1) {
+    return function(n2) {
+      return n1 + n2;
+    };
+  };
+  var numMul = function(n1) {
+    return function(n2) {
+      return n1 * n2;
+    };
+  };
+
+  // output/Data.Semiring/index.js
+  var zero = function(dict) {
+    return dict.zero;
+  };
+  var semiringNumber = {
+    add: numAdd,
+    zero: 0,
+    mul: numMul,
+    one: 1
+  };
+  var one = function(dict) {
+    return dict.one;
+  };
+  var mul = function(dict) {
+    return dict.mul;
+  };
+  var add = function(dict) {
+    return dict.add;
+  };
 
   // output/Data.Ord/index.js
   var ordString = /* @__PURE__ */ function() {
@@ -1454,6 +1507,12 @@
   };
 
   // output/Data.Monoid/index.js
+  var monoidUnit = {
+    mempty: unit,
+    Semigroup0: function() {
+      return semigroupUnit;
+    }
+  };
   var monoidArray = {
     mempty: [],
     Semigroup0: function() {
@@ -1513,6 +1572,20 @@
     };
   });
   var functorEffect = /* @__PURE__ */ $lazy_functorEffect(20);
+  var applyEffect = /* @__PURE__ */ $lazy_applyEffect(23);
+  var semigroupEffect = function(dictSemigroup) {
+    return {
+      append: lift2(applyEffect)(append(dictSemigroup))
+    };
+  };
+  var monoidEffect = function(dictMonoid) {
+    return {
+      mempty: pureE(mempty(dictMonoid)),
+      Semigroup0: function() {
+        return semigroupEffect(dictMonoid.Semigroup0());
+      }
+    };
+  };
 
   // output/Effect.Exception/foreign.js
   function error(msg) {
@@ -1702,6 +1775,13 @@
       return monadEffect;
     }
   };
+  var forever = function(dictMonadRec) {
+    return function(ma) {
+      return tailRecM(dictMonadRec)(function(u2) {
+        return voidRight(dictMonadRec.Monad0().Bind1().Apply0().Functor0())(new Loop(u2))(ma);
+      })(unit);
+    };
+  };
 
   // output/Data.HeytingAlgebra/foreign.js
   var boolConj = function(b1) {
@@ -1803,6 +1883,24 @@
   var snd = function(v) {
     return v.value1;
   };
+  var semiringTuple = function(dictSemiring) {
+    return function(dictSemiring1) {
+      return {
+        add: function(v) {
+          return function(v1) {
+            return new Tuple(add(dictSemiring)(v.value0)(v1.value0), add(dictSemiring1)(v.value1)(v1.value1));
+          };
+        },
+        one: new Tuple(one(dictSemiring), one(dictSemiring1)),
+        mul: function(v) {
+          return function(v1) {
+            return new Tuple(mul(dictSemiring)(v.value0)(v1.value0), mul(dictSemiring1)(v.value1)(v1.value1));
+          };
+        },
+        zero: new Tuple(zero(dictSemiring), zero(dictSemiring1))
+      };
+    };
+  };
   var functorTuple = {
     map: function(f) {
       return function(m) {
@@ -1812,6 +1910,23 @@
   };
   var fst = function(v) {
     return v.value0;
+  };
+
+  // output/Control.Monad.State.Class/index.js
+  var state = function(dict) {
+    return dict.state;
+  };
+  var modify_2 = function(dictMonadState) {
+    return function(f) {
+      return state(dictMonadState)(function(s) {
+        return new Tuple(unit, f(s));
+      });
+    };
+  };
+  var get = function(dictMonadState) {
+    return state(dictMonadState)(function(s) {
+      return new Tuple(s, s);
+    });
   };
 
   // output/Effect.Class/index.js
@@ -2359,6 +2474,9 @@
       return fiber;
     };
   };
+  var delay = function(v) {
+    return _delay(Right.create, v);
+  };
   var bracket = function(acquire) {
     return function(completed) {
       return generalBracket(acquire)({
@@ -2525,6 +2643,9 @@
     MonadEffect0: function() {
       return monadEffectAff;
     }
+  };
+  var liftAff = function(dict) {
+    return dict.liftAff;
   };
 
   // output/Web.DOM.ParentNode/foreign.js
@@ -4810,6 +4931,9 @@
   };
   var round = Math.round;
 
+  // output/Data.Number/index.js
+  var pi = 3.141592653589793;
+
   // output/Data.Int/index.js
   var fromNumber = /* @__PURE__ */ function() {
     return fromNumberImpl(Just.create)(Nothing.value);
@@ -5838,6 +5962,12 @@
       }
     };
   });
+  var freeApply = /* @__PURE__ */ $lazy_freeApply(77);
+  var semigroupFree = function(dictSemigroup) {
+    return {
+      append: lift2(freeApply)(append(dictSemigroup))
+    };
+  };
   var liftF = function(f) {
     return fromView(new Bind(f, function() {
       var $122 = pure(freeApplicative);
@@ -5845,6 +5975,14 @@
         return $122($123);
       };
     }()));
+  };
+  var monoidFree = function(dictMonoid) {
+    return {
+      mempty: pure(freeApplicative)(mempty(dictMonoid)),
+      Semigroup0: function() {
+        return semigroupFree(dictMonoid.Semigroup0());
+      }
+    };
   };
   var foldFree = function(dictMonadRec) {
     return function(k) {
@@ -6058,9 +6196,25 @@
   var HalogenM = function(x) {
     return x;
   };
+  var subscribe2 = function(es) {
+    return liftF(new Subscribe(function(v) {
+      return es;
+    }, identity(categoryFn)));
+  };
   var ordSubscriptionId = ordInt;
   var ordForkId = ordInt;
+  var monoidHalogenM = function(dictMonoid) {
+    return monoidFree(dictMonoid);
+  };
   var monadHalogenM = freeMonad;
+  var monadStateHalogenM = {
+    state: function($144) {
+      return HalogenM(liftF(State.create($144)));
+    },
+    Monad0: function() {
+      return monadHalogenM;
+    }
+  };
   var monadEffectHalogenM = function(dictMonadEffect) {
     return {
       liftEffect: function() {
@@ -6071,6 +6225,19 @@
       }(),
       Monad0: function() {
         return monadHalogenM;
+      }
+    };
+  };
+  var monadAffHalogenM = function(dictMonadAff) {
+    return {
+      liftAff: function() {
+        var $151 = liftAff(dictMonadAff);
+        return function($152) {
+          return HalogenM(liftF(Lift2.create($151($152))));
+        };
+      }(),
+      MonadEffect0: function() {
+        return monadEffectHalogenM(dictMonadAff.MonadEffect0());
       }
     };
   };
@@ -7669,6 +7836,16 @@
       return c.getContext("2d");
     };
   }
+  function getCanvasWidth(canvas2) {
+    return function() {
+      return canvas2.width;
+    };
+  }
+  function getCanvasHeight(canvas2) {
+    return function() {
+      return canvas2.height;
+    };
+  }
   function setFillStyle(ctx) {
     return function(style3) {
       return function() {
@@ -7691,10 +7868,17 @@
       ctx.closePath();
     };
   }
-  function rect(ctx) {
+  function arc(ctx) {
+    return function(a2) {
+      return function() {
+        ctx.arc(a2.x, a2.y, a2.radius, a2.start, a2.end, a2.useCounterClockwise);
+      };
+    };
+  }
+  function clearRect(ctx) {
     return function(r) {
       return function() {
-        ctx.rect(r.x, r.y, r.width, r.height);
+        ctx.clearRect(r.x, r.y, r.width, r.height);
       };
     };
   }
@@ -7702,6 +7886,16 @@
   // output/Graphics.Canvas/index.js
   var getCanvasElementById = function(elId) {
     return getCanvasElementByIdImpl(elId, Just.create, Nothing.value);
+  };
+  var getCanvasDimensions = function(ce) {
+    return function __do2() {
+      var w = getCanvasWidth(ce)();
+      var h = getCanvasHeight(ce)();
+      return {
+        width: w,
+        height: h
+      };
+    };
   };
 
   // output/CSS.Render/index.js
@@ -7784,52 +7978,131 @@
     Initialize3.value = new Initialize3();
     return Initialize3;
   }();
-  var initialState = function(v) {
-    return 0;
+  var Tick = /* @__PURE__ */ function() {
+    function Tick2() {
+    }
+    ;
+    Tick2.value = new Tick2();
+    return Tick2;
+  }();
+  var timer = function(dictMonadAff) {
+    return function(val) {
+      return bind(dictMonadAff.MonadEffect0().Monad0().Bind1())(liftEffect(dictMonadAff.MonadEffect0())(create3))(function(v) {
+        return bind(dictMonadAff.MonadEffect0().Monad0().Bind1())(liftAff(dictMonadAff)(forkAff(forever(monadRecAff)(discard(discardUnit)(bindAff)(delay(10))(function() {
+          return liftEffect(monadEffectAff)(notify(v.listener)(val));
+        })))))(function() {
+          return pure(dictMonadAff.MonadEffect0().Monad0().Applicative0())(v.emitter);
+        });
+      });
+    };
   };
-  var draw = function(canvas2) {
-    return function __do2() {
-      var ctx = getContext2D(canvas2)();
-      beginPath(ctx)();
-      rect(ctx)({
-        x: 240,
-        y: 160,
-        width: 100,
-        height: 40
-      })();
-      setFillStyle(ctx)("blue")();
-      fill(ctx)();
-      return closePath(ctx)();
+  var initialState = function(v) {
+    return {
+      mbCanvas: Nothing.value,
+      dataset: {
+        q: new Tuple(480, 480),
+        dq: new Tuple(1, 1)
+      }
+    };
+  };
+  var draw = function(v) {
+    return function(v1) {
+      if (v instanceof Nothing) {
+        return mempty(monoidEffect(monoidUnit));
+      }
+      ;
+      if (v instanceof Just) {
+        return function __do2() {
+          var ctx = getContext2D(v.value0)();
+          var dim = getCanvasDimensions(v.value0)();
+          clearRect(ctx)({
+            x: 0,
+            y: 0,
+            width: dim.width,
+            height: dim.height
+          })();
+          beginPath(ctx)();
+          arc(ctx)({
+            x: fst(v1.q),
+            y: snd(v1.q),
+            radius: 30,
+            start: 0,
+            end: pi * 2,
+            useCounterClockwise: true
+          })();
+          setFillStyle(ctx)("blue")();
+          fill(ctx)();
+          return closePath(ctx)();
+        };
+      }
+      ;
+      throw new Error("Failed pattern match at MyCanvas (line 99, column 1 - line 99, column 54): " + [v.constructor.name, v1.constructor.name]);
     };
   };
   var canvasId = "myCanvas";
-  var handleAction = function(dictBind) {
-    return function(dictMonadEffect) {
+  var handleAction = function(dictMonadEffect) {
+    return function(dictMonadAff) {
       return function(v) {
-        return bind(dictBind)(liftEffect(dictMonadEffect)(getCanvasElementById(canvasId)))(function(maybeCanvas) {
-          return liftEffect(dictMonadEffect)(function() {
-            if (maybeCanvas instanceof Nothing) {
-              return pure(applicativeEffect)(unit);
-            }
-            ;
-            if (maybeCanvas instanceof Just) {
-              return draw(maybeCanvas.value0);
-            }
-            ;
-            throw new Error("Failed pattern match at MyCanvas (line 62, column 18 - line 64, column 48): " + [maybeCanvas.constructor.name]);
-          }());
-        });
+        if (v instanceof Initialize2) {
+          return bind(bindHalogenM)(liftEffect(monadEffectHalogenM(dictMonadEffect))(getCanvasElementById(canvasId)))(function(mbCanvas) {
+            return discard(discardUnit)(bindHalogenM)(modify_2(monadStateHalogenM)(function(state3) {
+              var $22 = {};
+              for (var $23 in state3) {
+                if ({}.hasOwnProperty.call(state3, $23)) {
+                  $22[$23] = state3[$23];
+                }
+                ;
+              }
+              ;
+              $22.mbCanvas = mbCanvas;
+              return $22;
+            }))(function() {
+              return bind(bindHalogenM)(bindFlipped(bindHalogenM)(subscribe2)(timer(monadAffHalogenM(dictMonadAff))(Tick.value)))(function() {
+                return mempty(monoidHalogenM(monoidUnit));
+              });
+            });
+          });
+        }
+        ;
+        if (v instanceof Tick) {
+          var tickUpdateDataset = bind(bindHalogenM)(get(monadStateHalogenM))(function(state3) {
+            return modify_2(monadStateHalogenM)(function(s) {
+              var $26 = {};
+              for (var $27 in s) {
+                if ({}.hasOwnProperty.call(s, $27)) {
+                  $26[$27] = s[$27];
+                }
+                ;
+              }
+              ;
+              $26.dataset = {
+                q: add(semiringTuple(semiringNumber)(semiringNumber))(state3.dataset.q)(state3.dataset.dq),
+                dq: state3.dataset.dq
+              };
+              return $26;
+            });
+          });
+          return discard(discardUnit)(bindHalogenM)(tickUpdateDataset)(function() {
+            return bind(bindHalogenM)(get(monadStateHalogenM))(function(state3) {
+              return liftEffect(monadEffectHalogenM(dictMonadAff.MonadEffect0()))(draw(state3.mbCanvas)(state3.dataset));
+            });
+          });
+        }
+        ;
+        throw new Error("Failed pattern match at MyCanvas (line 76, column 1 - line 80, column 9): " + [v.constructor.name]);
       };
     };
   };
   var $$eval = function(dictMonadEffect) {
-    return mkEval({
-      handleAction: handleAction(bindHalogenM)(monadEffectHalogenM(dictMonadEffect)),
-      handleQuery: defaultEval.handleQuery,
-      receive: defaultEval.receive,
-      initialize: new Just(Initialize2.value),
-      finalize: defaultEval.finalize
-    });
+    return function(dictMonadAff) {
+      return mkEval({
+        handleAction: handleAction(dictMonadEffect)(dictMonadAff),
+        handleQuery: defaultEval.handleQuery,
+        receive: defaultEval.receive,
+        initialize: new Just(Initialize2.value),
+        finalize: defaultEval.finalize
+      });
+    };
   };
   var canvasBackgroundColor = /* @__PURE__ */ rgb(238)(238)(238);
   var render2 = function(v) {
@@ -7843,13 +8116,13 @@
           });
         });
       });
-    })), id2(canvasId), width8(480), height8(480)])]);
+    })), id2(canvasId), width8(960), height8(960)])]);
   };
   var component = function(dictMonadAff) {
     return mkComponent({
       initialState,
       render: render2,
-      "eval": $$eval(dictMonadAff.MonadEffect0())
+      "eval": $$eval(dictMonadAff.MonadEffect0())(dictMonadAff)
     });
   };
 
