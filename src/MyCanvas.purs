@@ -20,6 +20,8 @@ import Halogen.HTML.Properties as HP
 import Halogen.Subscription as HS
 import Data.Number (pi)
 
+import Graphics.Drawing.For2D
+
 data Action = Initialize | Tick
 
 type State =  { mbCanvas :: Maybe CanvasElement
