@@ -14,9 +14,12 @@ to generate this file without the comments in this block.
 , dependencies =
   [ "aff"
   , "canvas"
+  , "colors"
   , "console"
   , "css"
   , "effect"
+  , "foldable-traversable"
+  , "group"
   , "halogen"
   , "halogen-css"
   , "halogen-subscriptions"
