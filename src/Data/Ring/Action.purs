@@ -3,9 +3,9 @@ module Data.Ring.Action
   , class RightAction
   ) where
 
-import Data.Semiring.Action (class LeftAction, class RightAction) as Semiring
+import Data.Semiring.Action (class LeftAction, class RightAction) as SemiringAct
 import Data.Ring (class Ring)
 
-class (Semiring.LeftAction a x, Ring a) <= LeftAction a x
+class (SemiringAct.LeftAction a x, Ring a) <= LeftAction a x
 
-class (Semiring.RightAction a x, Ring a) <= RightAction a x
+class (SemiringAct.RightAction a x, Ring a) <= RightAction a x
