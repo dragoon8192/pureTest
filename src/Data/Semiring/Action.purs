@@ -3,6 +3,7 @@ module Data.Semiring.Action
   , class RightAction
   , lact
   , ract
+  , flipRact
   , (<+)
   , (+>)
   ) where
