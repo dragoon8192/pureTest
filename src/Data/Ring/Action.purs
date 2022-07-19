@@ -4,8 +4,8 @@ module Data.Ring.Action
   , module Data.Semiring.Action
   ) where
 
-import Data.Ring (class Ring, (*))
-import Data.Monoid.Additive (Additive(..))
+import Data.Ring (class Ring)
+import Data.Monoid.Additive (Additive)
 
 import Data.Semiring.Action
   ( class LeftAction
