@@ -4,6 +4,8 @@ module Data.Ring.Action
   , module Data.Semiring.Action
   ) where
 
+import Data.Ring (class Ring)
+
 import Data.Semiring.Action
   ( class LeftAction
   , class RightAction
@@ -15,8 +17,6 @@ import Data.Semiring.Action
   , (<+)
   , (+>)
   )
-
-import Data.Ring (class Ring)
 
 class (SemiringAct.LeftAction a x, Ring a) <= LeftAction a x
 
