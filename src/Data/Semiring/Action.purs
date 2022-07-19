@@ -11,7 +11,7 @@ module Data.Semiring.Action
 import Data.Function (flip)
 import Data.Semiring (class Semiring, (*))
 import Data.Monoid (class Monoid)
-import Data.Monoid.Multiplicative (Multiplicative(..))
+import Data.Monoid.Additive (Additive(..))
 
 -- | A semiring `a` acting on a semimodule (a commutative monoid`x`. Instances must satisfy the following
 -- | laws in addition to the `Semiring` laws:
@@ -51,8 +51,13 @@ flipRact = flip ract
 infixl 6 lact as <^
 infixr 6 flipRact as ^>
 
-instance leftActionSemiringActingOnItself :: Semiring a => LeftAction a (Multiplicative a) where
-  lact a (Multiplicative b) = Multiplicative (a * b)
+-- | - Identity: `forall x. one * x = x`
+-- | - Compatibility: `forall a b x. (a * b) * x = a * (b * x)`
+-- | - Identity: `forall x. zero * x = zero`
+-- | - Distributivity: `forall a b x. (a + b) * x = a * x + b * x`
+-- | - Distributivity: `forall a x y. a * (x + y) = a * x + a * y`
+instance leftActionSemiringActingOnItself :: Semiring a => LeftAction a (Additive a) where
+  lact a (Additive b) = Additive (a * b)
 
-instance rightActionSemiringActingOnItself :: Semiring a => RightAction a (Multiplicative a) where
-  ract a (Multiplicative b) = Multiplicative (b * a)
+instance rightActionSemiringActingOnItself :: Semiring a => RightAction a (Additive a) where
+  ract a (Additive b) = Additive (b * a)
