@@ -1,4 +1,11 @@
-module Data.Semiring.Action where
+module Data.Semiring.Action
+  ( class LeftAction
+  , class RightAction
+  , lact
+  , ract
+  , (<+)
+  , (+>)
+  ) where
 
 import Data.Function (flip)
 import Data.Semiring (class Semiring)
