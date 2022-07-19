@@ -1,4 +1,7 @@
-module Data.Ring.Action where
+module Data.Ring.Action
+  ( class LeftAction
+  , class RightAction
+  ) where
 
 import Data.Semiring.Action (class LeftAction, class RightAction) as Semiring
 import Data.Ring (class Ring)
