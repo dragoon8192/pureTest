@@ -1,16 +1,23 @@
-module Data.Field.Action where
+module Data.Field.Action
+  ( class LeftAction
+  , class RightAction
+  , module Data.Ring.Action
+  ) where
 
-import Prelude (class Field)
-import Data.Group.Action as GA
+import Data.Field (class Field)
 
--- #WIP
--- | A field `k` acting on a vector-space `v`. Instances must satisfy the following
--- | laws in addition to the `` laws:
--- |
--- | - Identity: `forall v. lact one v = v`
--- |   - i.e. `lact one = id`
--- | - Compatibility: `forall k l v. lact (k * l) v = lact k (lact l v)`
--- |   - i.e. `forall k l. lact (k * l) = lact k <<< lact l
-class (Field k) <= LeftAction k v where
-  lact :: k -> v -> v
+import Data.Ring.Action
+  ( class LeftAction
+  , class RightAction
+  ) as RingAct
+import Data.Ring.Action
+  ( lact
+  , ract
+  , flipRact
+  , (<+)
+  , (+>)
+  )
 
+class (RingAct.LeftAction a x, Ring a) <= LeftAction a x
+
+class (RingAct.RightAction a x, Ring a) <= RightAction a x
