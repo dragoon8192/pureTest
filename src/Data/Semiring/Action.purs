@@ -11,7 +11,7 @@ module Data.Semiring.Action
 import Data.Function (flip)
 import Data.Semiring (class Semiring, (*))
 import Data.Monoid (class Monoid)
-import Data.Monoid.Multiplicative
+import Data.Monoid.Multiplicative (Multiplicative(..))
 
 -- | A semiring `a` acting on a semimodule (a commutative monoid`x`. Instances must satisfy the following
 -- | laws in addition to the `Semiring` laws:
