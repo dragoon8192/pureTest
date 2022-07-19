@@ -8,7 +8,8 @@ module Data.Semiring.Action
   , (^>)
   ) where
 
-import Data.Function (flip)
+import Data.Function (flip, ($))
+import Data.Functor (class Functor, map)
 import Data.Semiring (class Semiring, (*))
 import Data.Monoid (class Monoid)
 import Data.Monoid.Additive (Additive(..))
@@ -59,5 +60,12 @@ infixr 6 flipRact as ^>
 instance leftActionSemiringActingOnItself :: Semiring a => LeftAction a (Additive a) where
   lact a (Additive b) = Additive (a * b)
 
+else instance leftActionFunctor :: (LeftAction a x , Functor f, Monoid (f x)) => LeftAction a (f x) where
+  lact a = map $ lact a
+
 instance rightActionSemiringActingOnItself :: Semiring a => RightAction a (Additive a) where
   ract a (Additive b) = Additive (b * a)
+
+else instance rightActionFunctor :: (RightAction a x , Functor f, Monoid (f x)) => RightAction a (f x) where
+  ract a = map $ ract a
+
