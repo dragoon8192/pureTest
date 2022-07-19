@@ -18,6 +18,6 @@ import Data.Ring.Action
   , (+>)
   )
 
-class (RingAct.LeftAction a x, Ring a) <= LeftAction a x
+class (RingAct.LeftAction a x, Field a) <= LeftAction a x
 
-class (RingAct.RightAction a x, Ring a) <= RightAction a x
+class (RingAct.RightAction a x, Field a) <= RightAction a x
