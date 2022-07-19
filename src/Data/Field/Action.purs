@@ -14,8 +14,8 @@ import Data.Ring.Action
   ( lact
   , ract
   , flipRact
-  , (<+)
-  , (+>)
+  , (<^)
+  , (^>)
   )
 
 class (RingAct.LeftAction a x, Field a) <= LeftAction a x

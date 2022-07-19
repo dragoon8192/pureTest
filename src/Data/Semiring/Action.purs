@@ -4,8 +4,8 @@ module Data.Semiring.Action
   , lact
   , ract
   , flipRact
-  , (<+)
-  , (+>)
+  , (<^)
+  , (^>)
   ) where
 
 import Data.Function (flip)
@@ -48,8 +48,8 @@ class (Semiring a, Monoid x) <= RightAction a x where
 flipRact :: forall a x. RightAction a x => x -> a -> x
 flipRact = flip ract
 
-infixl 6 lact as <+
-infixr 6 flipRact as +>
+infixl 6 lact as <^
+infixr 6 flipRact as ^>
 
 instance leftActionSemiringActingOnItself :: Semiring a => LeftAction a (Multiplicative a) where
   lact a (Multiplicative b) = Multiplicative (a * b)

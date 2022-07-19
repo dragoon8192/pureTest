@@ -14,8 +14,8 @@ import Data.Semiring.Action
   ( lact
   , ract
   , flipRact
-  , (<+)
-  , (+>)
+  , (<^)
+  , (^>)
   )
 
 class (SemiringAct.LeftAction a x, Ring a) <= LeftAction a x
