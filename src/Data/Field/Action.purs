@@ -4,8 +4,8 @@ module Data.Field.Action
   , module Data.Ring.Action
   ) where
 
-import Data.Field (class Field, (*))
-import Data.Monoid.Additive (Additive(..))
+import Data.Field (class Field)
+import Data.Monoid.Additive (Additive)
 
 import Data.Ring.Action
   ( class LeftAction
