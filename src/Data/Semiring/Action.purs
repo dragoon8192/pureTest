@@ -68,4 +68,3 @@ instance rightActionSemiringActingOnItself :: Semiring a => RightAction a (Addit
 
 else instance rightActionFunctor :: (RightAction a x , Functor f, Monoid (f x)) => RightAction a (f x) where
   ract a = map $ ract a
-
