@@ -6,6 +6,7 @@ module Data.Field.Action
 
 import Data.Field (class Field)
 import Data.Monoid.Additive (Additive)
+import Data.Unit (Unit(..), unit)
 
 import Data.Ring.Action
   ( class LeftAction
@@ -26,3 +27,7 @@ class (RingAct.RightAction a x, Field a) <= RightAction a x
 instance leftActionFieldActingOnItself :: Field a => LeftAction a (Additive a)
 
 instance rightActionFieldActingOnItself :: Field a => RightAction a (Additive a)
+
+instance leftActionUnit :: Field a => LeftAction a Unit
+
+instance rightActionUnit :: Field a => RightAction a Unit

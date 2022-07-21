@@ -6,6 +6,7 @@ module Data.Ring.Action
 
 import Data.Ring (class Ring)
 import Data.Monoid.Additive (Additive)
+import Data.Unit (Unit(..), unit)
 
 import Data.Semiring.Action
   ( class LeftAction
@@ -26,3 +27,7 @@ class (Semiring.RightAction a x, Ring a) <= RightAction a x
 instance leftActionRingActingOnItself :: Ring a => LeftAction a (Additive a)
 
 instance rightActionRingActingOnItself :: Ring a => RightAction a (Additive a)
+
+instance leftActionUnit :: Ring a => LeftAction a Unit
+
+instance rightActionUnit :: Ring a => RightAction a Unit
