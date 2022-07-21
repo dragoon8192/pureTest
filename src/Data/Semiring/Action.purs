@@ -60,11 +60,5 @@ infixr 6 flipRact as ^>
 instance leftActionSemiringActingOnItself :: Semiring a => LeftAction a (Additive a) where
   lact a (Additive b) = Additive (a * b)
 
-else instance leftActionFunctor :: (LeftAction a x , Functor f, Monoid (f x)) => LeftAction a (f x) where
-  lact a = map $ lact a
-
 instance rightActionSemiringActingOnItself :: Semiring a => RightAction a (Additive a) where
   ract a (Additive b) = Additive (b * a)
-
-else instance rightActionFunctor :: (RightAction a x , Functor f, Monoid (f x)) => RightAction a (f x) where
-  ract a = map $ ract a
