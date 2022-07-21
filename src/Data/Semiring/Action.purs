@@ -14,6 +14,7 @@ import Data.Semiring (class Semiring, (*))
 import Data.Monoid (class Monoid)
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Dual (Dual(..))
+import Data.Unit (Unit(..), unit)
 
 -- | A semiring `a` acting on a semimodule (a commutative monoid`x`).
 -- | Instances must satisfy the following laws in addition to the `Semiring` laws:
@@ -63,6 +64,12 @@ instance leftActionSemiringActingOnItself :: Semiring a => LeftAction a (Additiv
 
 instance rightActionSemiringActingOnItself :: Semiring a => RightAction a (Additive a) where
   ract a (Additive b) = Additive (b * a)
+
+instance leftActionUnit :: Semiring a => LeftAction a Unit where
+  lact _ _ = unit
+
+instance rightActionUnit :: Semiring a => RightAction a Unit where
+  ract _ _ = unit
 
 instance leftActionDual :: RightAction a x => LeftAction a (Dual x) where
   lact a (Dual x) = Dual $ ract a x
