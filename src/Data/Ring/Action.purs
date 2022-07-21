@@ -6,7 +6,7 @@ module Data.Ring.Action
 
 import Data.Ring (class Ring)
 import Data.Monoid.Additive (Additive)
-import Data.Unit (Unit(..), unit)
+import Data.Unit (Unit)
 
 import Data.Semiring.Action
   ( class LeftAction

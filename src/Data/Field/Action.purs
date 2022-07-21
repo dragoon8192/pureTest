@@ -6,7 +6,7 @@ module Data.Field.Action
 
 import Data.Field (class Field)
 import Data.Monoid.Additive (Additive)
-import Data.Unit (Unit(..), unit)
+import Data.Unit (Unit)
 
 import Data.Ring.Action
   ( class LeftAction
