@@ -14,8 +14,8 @@ import Data.Semiring (class Semiring, (*))
 import Data.Monoid (class Monoid)
 import Data.Monoid.Additive (Additive(..))
 
--- | A semiring `a` acting on a semimodule (a commutative monoid`x`. Instances must satisfy the following
--- | laws in addition to the `Semiring` laws:
+-- | A semiring `a` acting on a semimodule (a commutative monoid`x`).
+-- | Instances must satisfy the following laws in addition to the `Semiring` laws:
 -- |
 -- | - Identity: `forall x. lact one x = x`
 -- |   - i.e. `lact one = identity`
@@ -30,8 +30,8 @@ import Data.Monoid.Additive (Additive(..))
 class (Semiring a, Monoid x) <= LeftAction a x where
   lact :: a -> x -> x
 
--- | A semiring `a` acting on a semimodule (a commutative monoid`x`. Instances must satisfy the following
--- | laws in addition to the `Semiring` laws:
+-- | A semiring `a` acting on a semimodule (a commutative monoid`x`).
+-- | Instances must satisfy the following laws in addition to the `Semiring` laws:
 -- |
 -- | - Identity: `forall x. ract one x = x`
 -- |   - i.e. `ract one = identity`
