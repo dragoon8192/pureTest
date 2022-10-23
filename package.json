@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "esbuild": "^0.14.48",
-    "purescript": "^0.15.4"
-  }
-}
