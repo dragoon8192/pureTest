@@ -2219,8 +2219,8 @@
     return function(dictFoldable) {
       var foldr22 = foldr(dictFoldable);
       return function(f) {
-        return foldr22(function($449) {
-          return applySecond2(f($449));
+        return foldr22(function($454) {
+          return applySecond2(f($454));
         })(pure9(unit));
       };
     };
@@ -2236,32 +2236,32 @@
   };
   var foldableMaybe = {
     foldr: function(v) {
-      return function(z) {
-        return function(v1) {
-          if (v1 instanceof Nothing) {
-            return z;
+      return function(v1) {
+        return function(v2) {
+          if (v2 instanceof Nothing) {
+            return v1;
           }
           ;
-          if (v1 instanceof Just) {
-            return v(v1.value0)(z);
+          if (v2 instanceof Just) {
+            return v(v2.value0)(v1);
           }
           ;
-          throw new Error("Failed pattern match at Data.Foldable (line 138, column 1 - line 144, column 27): " + [v.constructor.name, z.constructor.name, v1.constructor.name]);
+          throw new Error("Failed pattern match at Data.Foldable (line 138, column 1 - line 144, column 27): " + [v.constructor.name, v1.constructor.name, v2.constructor.name]);
         };
       };
     },
     foldl: function(v) {
-      return function(z) {
-        return function(v1) {
-          if (v1 instanceof Nothing) {
-            return z;
+      return function(v1) {
+        return function(v2) {
+          if (v2 instanceof Nothing) {
+            return v1;
           }
           ;
-          if (v1 instanceof Just) {
-            return v(z)(v1.value0);
+          if (v2 instanceof Just) {
+            return v(v1)(v2.value0);
           }
           ;
-          throw new Error("Failed pattern match at Data.Foldable (line 138, column 1 - line 144, column 27): " + [v.constructor.name, z.constructor.name, v1.constructor.name]);
+          throw new Error("Failed pattern match at Data.Foldable (line 138, column 1 - line 144, column 27): " + [v.constructor.name, v1.constructor.name, v2.constructor.name]);
         };
       };
     },
@@ -2284,32 +2284,32 @@
   };
   var foldableEither = {
     foldr: function(v) {
-      return function(z) {
-        return function(v1) {
-          if (v1 instanceof Left) {
-            return z;
+      return function(v1) {
+        return function(v2) {
+          if (v2 instanceof Left) {
+            return v1;
           }
           ;
-          if (v1 instanceof Right) {
-            return v(v1.value0)(z);
+          if (v2 instanceof Right) {
+            return v(v2.value0)(v1);
           }
           ;
-          throw new Error("Failed pattern match at Data.Foldable (line 181, column 1 - line 187, column 28): " + [v.constructor.name, z.constructor.name, v1.constructor.name]);
+          throw new Error("Failed pattern match at Data.Foldable (line 181, column 1 - line 187, column 28): " + [v.constructor.name, v1.constructor.name, v2.constructor.name]);
         };
       };
     },
     foldl: function(v) {
-      return function(z) {
-        return function(v1) {
-          if (v1 instanceof Left) {
-            return z;
+      return function(v1) {
+        return function(v2) {
+          if (v2 instanceof Left) {
+            return v1;
           }
           ;
-          if (v1 instanceof Right) {
-            return v(z)(v1.value0);
+          if (v2 instanceof Right) {
+            return v(v1)(v2.value0);
           }
           ;
-          throw new Error("Failed pattern match at Data.Foldable (line 181, column 1 - line 187, column 28): " + [v.constructor.name, z.constructor.name, v1.constructor.name]);
+          throw new Error("Failed pattern match at Data.Foldable (line 181, column 1 - line 187, column 28): " + [v.constructor.name, v1.constructor.name, v2.constructor.name]);
         };
       };
     },
@@ -2359,16 +2359,16 @@
     return function(dictEq) {
       var eq2 = eq(dictEq);
       return function(a2) {
-        var $455 = foldMap22(function(v) {
-          var $439 = eq2(a2)(v.value0);
-          if ($439) {
+        var $460 = foldMap22(function(v) {
+          var $444 = eq2(a2)(v.value0);
+          if ($444) {
             return new Just(v.value1);
           }
           ;
           return Nothing.value;
         });
-        return function($456) {
-          return unwrap2($455($456));
+        return function($461) {
+          return unwrap2($460($461));
         };
       };
     };
@@ -3009,58 +3009,58 @@
     return x;
   };
   var listMap = function(f) {
-    var chunkedRevMap = function($copy_chunksAcc) {
-      return function($copy_v) {
-        var $tco_var_chunksAcc = $copy_chunksAcc;
+    var chunkedRevMap = function($copy_v) {
+      return function($copy_v1) {
+        var $tco_var_v = $copy_v;
         var $tco_done = false;
         var $tco_result;
-        function $tco_loop(chunksAcc, v) {
-          if (v instanceof Cons && (v.value1 instanceof Cons && v.value1.value1 instanceof Cons)) {
-            $tco_var_chunksAcc = new Cons(v, chunksAcc);
-            $copy_v = v.value1.value1.value1;
+        function $tco_loop(v, v1) {
+          if (v1 instanceof Cons && (v1.value1 instanceof Cons && v1.value1.value1 instanceof Cons)) {
+            $tco_var_v = new Cons(v1, v);
+            $copy_v1 = v1.value1.value1.value1;
             return;
           }
           ;
-          var unrolledMap = function(v1) {
-            if (v1 instanceof Cons && (v1.value1 instanceof Cons && v1.value1.value1 instanceof Nil)) {
-              return new Cons(f(v1.value0), new Cons(f(v1.value1.value0), Nil.value));
+          var unrolledMap = function(v2) {
+            if (v2 instanceof Cons && (v2.value1 instanceof Cons && v2.value1.value1 instanceof Nil)) {
+              return new Cons(f(v2.value0), new Cons(f(v2.value1.value0), Nil.value));
             }
             ;
-            if (v1 instanceof Cons && v1.value1 instanceof Nil) {
-              return new Cons(f(v1.value0), Nil.value);
+            if (v2 instanceof Cons && v2.value1 instanceof Nil) {
+              return new Cons(f(v2.value0), Nil.value);
             }
             ;
             return Nil.value;
           };
-          var reverseUnrolledMap = function($copy_v1) {
-            return function($copy_acc) {
-              var $tco_var_v1 = $copy_v1;
+          var reverseUnrolledMap = function($copy_v2) {
+            return function($copy_v3) {
+              var $tco_var_v2 = $copy_v2;
               var $tco_done1 = false;
               var $tco_result2;
-              function $tco_loop2(v1, acc) {
-                if (v1 instanceof Cons && (v1.value0 instanceof Cons && (v1.value0.value1 instanceof Cons && v1.value0.value1.value1 instanceof Cons))) {
-                  $tco_var_v1 = v1.value1;
-                  $copy_acc = new Cons(f(v1.value0.value0), new Cons(f(v1.value0.value1.value0), new Cons(f(v1.value0.value1.value1.value0), acc)));
+              function $tco_loop2(v2, v3) {
+                if (v2 instanceof Cons && (v2.value0 instanceof Cons && (v2.value0.value1 instanceof Cons && v2.value0.value1.value1 instanceof Cons))) {
+                  $tco_var_v2 = v2.value1;
+                  $copy_v3 = new Cons(f(v2.value0.value0), new Cons(f(v2.value0.value1.value0), new Cons(f(v2.value0.value1.value1.value0), v3)));
                   return;
                 }
                 ;
                 $tco_done1 = true;
-                return acc;
+                return v3;
               }
               ;
               while (!$tco_done1) {
-                $tco_result2 = $tco_loop2($tco_var_v1, $copy_acc);
+                $tco_result2 = $tco_loop2($tco_var_v2, $copy_v3);
               }
               ;
               return $tco_result2;
             };
           };
           $tco_done = true;
-          return reverseUnrolledMap(chunksAcc)(unrolledMap(v));
+          return reverseUnrolledMap(v)(unrolledMap(v1));
         }
         ;
         while (!$tco_done) {
-          $tco_result = $tco_loop($tco_var_chunksAcc, $copy_v);
+          $tco_result = $tco_loop($tco_var_v, $copy_v1);
         }
         ;
         return $tco_result;
@@ -3075,28 +3075,28 @@
     foldr: function(f) {
       return function(b2) {
         var rev3 = function() {
-          var go2 = function($copy_acc) {
-            return function($copy_v) {
-              var $tco_var_acc = $copy_acc;
+          var go2 = function($copy_v) {
+            return function($copy_v1) {
+              var $tco_var_v = $copy_v;
               var $tco_done = false;
               var $tco_result;
-              function $tco_loop(acc, v) {
-                if (v instanceof Nil) {
+              function $tco_loop(v, v1) {
+                if (v1 instanceof Nil) {
                   $tco_done = true;
-                  return acc;
+                  return v;
                 }
                 ;
-                if (v instanceof Cons) {
-                  $tco_var_acc = new Cons(v.value0, acc);
-                  $copy_v = v.value1;
+                if (v1 instanceof Cons) {
+                  $tco_var_v = new Cons(v1.value0, v);
+                  $copy_v1 = v1.value1;
                   return;
                 }
                 ;
-                throw new Error("Failed pattern match at Data.List.Types (line 107, column 7 - line 107, column 23): " + [acc.constructor.name, v.constructor.name]);
+                throw new Error("Failed pattern match at Data.List.Types (line 107, column 7 - line 107, column 23): " + [v.constructor.name, v1.constructor.name]);
               }
               ;
               while (!$tco_done) {
-                $tco_result = $tco_loop($tco_var_acc, $copy_v);
+                $tco_result = $tco_loop($tco_var_v, $copy_v1);
               }
               ;
               return $tco_result;
@@ -3104,9 +3104,9 @@
           };
           return go2(Nil.value);
         }();
-        var $281 = foldl(foldableList)(flip(f))(b2);
-        return function($282) {
-          return $281(rev3($282));
+        var $284 = foldl(foldableList)(flip(f))(b2);
+        return function($285) {
+          return $284(rev3($285));
         };
       };
     },
@@ -3145,9 +3145,9 @@
       var mempty3 = mempty(dictMonoid);
       return function(f) {
         return foldl(foldableList)(function(acc) {
-          var $283 = append24(acc);
-          return function($284) {
-            return $283(f($284));
+          var $286 = append24(acc);
+          return function($287) {
+            return $286(f($287));
           };
         })(mempty3);
       };
@@ -3179,28 +3179,28 @@
 
   // output/Data.List/index.js
   var reverse = /* @__PURE__ */ function() {
-    var go2 = function($copy_acc) {
-      return function($copy_v) {
-        var $tco_var_acc = $copy_acc;
+    var go2 = function($copy_v) {
+      return function($copy_v1) {
+        var $tco_var_v = $copy_v;
         var $tco_done = false;
         var $tco_result;
-        function $tco_loop(acc, v) {
-          if (v instanceof Nil) {
+        function $tco_loop(v, v1) {
+          if (v1 instanceof Nil) {
             $tco_done = true;
-            return acc;
+            return v;
           }
           ;
-          if (v instanceof Cons) {
-            $tco_var_acc = new Cons(v.value0, acc);
-            $copy_v = v.value1;
+          if (v1 instanceof Cons) {
+            $tco_var_v = new Cons(v1.value0, v);
+            $copy_v1 = v1.value1;
             return;
           }
           ;
-          throw new Error("Failed pattern match at Data.List (line 368, column 3 - line 368, column 19): " + [acc.constructor.name, v.constructor.name]);
+          throw new Error("Failed pattern match at Data.List (line 368, column 3 - line 368, column 19): " + [v.constructor.name, v1.constructor.name]);
         }
         ;
         while (!$tco_done) {
-          $tco_result = $tco_loop($tco_var_acc, $copy_v);
+          $tco_result = $tco_loop($tco_var_v, $copy_v1);
         }
         ;
         return $tco_result;
@@ -3466,61 +3466,61 @@
   };
   var fromZipper = function($copy_dictOrd) {
     return function($copy_v) {
-      return function($copy_tree) {
+      return function($copy_v1) {
         var $tco_var_dictOrd = $copy_dictOrd;
         var $tco_var_v = $copy_v;
         var $tco_done = false;
         var $tco_result;
-        function $tco_loop(dictOrd, v, tree) {
+        function $tco_loop(dictOrd, v, v1) {
           if (v instanceof Nil) {
             $tco_done = true;
-            return tree;
+            return v1;
           }
           ;
           if (v instanceof Cons) {
             if (v.value0 instanceof TwoLeft) {
               $tco_var_dictOrd = dictOrd;
               $tco_var_v = v.value1;
-              $copy_tree = new Two(tree, v.value0.value0, v.value0.value1, v.value0.value2);
+              $copy_v1 = new Two(v1, v.value0.value0, v.value0.value1, v.value0.value2);
               return;
             }
             ;
             if (v.value0 instanceof TwoRight) {
               $tco_var_dictOrd = dictOrd;
               $tco_var_v = v.value1;
-              $copy_tree = new Two(v.value0.value0, v.value0.value1, v.value0.value2, tree);
+              $copy_v1 = new Two(v.value0.value0, v.value0.value1, v.value0.value2, v1);
               return;
             }
             ;
             if (v.value0 instanceof ThreeLeft) {
               $tco_var_dictOrd = dictOrd;
               $tco_var_v = v.value1;
-              $copy_tree = new Three(tree, v.value0.value0, v.value0.value1, v.value0.value2, v.value0.value3, v.value0.value4, v.value0.value5);
+              $copy_v1 = new Three(v1, v.value0.value0, v.value0.value1, v.value0.value2, v.value0.value3, v.value0.value4, v.value0.value5);
               return;
             }
             ;
             if (v.value0 instanceof ThreeMiddle) {
               $tco_var_dictOrd = dictOrd;
               $tco_var_v = v.value1;
-              $copy_tree = new Three(v.value0.value0, v.value0.value1, v.value0.value2, tree, v.value0.value3, v.value0.value4, v.value0.value5);
+              $copy_v1 = new Three(v.value0.value0, v.value0.value1, v.value0.value2, v1, v.value0.value3, v.value0.value4, v.value0.value5);
               return;
             }
             ;
             if (v.value0 instanceof ThreeRight) {
               $tco_var_dictOrd = dictOrd;
               $tco_var_v = v.value1;
-              $copy_tree = new Three(v.value0.value0, v.value0.value1, v.value0.value2, v.value0.value3, v.value0.value4, v.value0.value5, tree);
+              $copy_v1 = new Three(v.value0.value0, v.value0.value1, v.value0.value2, v.value0.value3, v.value0.value4, v.value0.value5, v1);
               return;
             }
             ;
             throw new Error("Failed pattern match at Data.Map.Internal (line 462, column 3 - line 467, column 88): " + [v.value0.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Data.Map.Internal (line 459, column 1 - line 459, column 80): " + [v.constructor.name, tree.constructor.name]);
+          throw new Error("Failed pattern match at Data.Map.Internal (line 459, column 1 - line 459, column 80): " + [v.constructor.name, v1.constructor.name]);
         }
         ;
         while (!$tco_done) {
-          $tco_result = $tco_loop($tco_var_dictOrd, $tco_var_v, $copy_tree);
+          $tco_result = $tco_loop($tco_var_dictOrd, $tco_var_v, $copy_v1);
         }
         ;
         return $tco_result;
@@ -3585,70 +3585,70 @@
             return $tco_result;
           };
         };
-        var down = function($copy_ctx) {
-          return function($copy_v1) {
-            var $tco_var_ctx = $copy_ctx;
+        var down = function($copy_v1) {
+          return function($copy_v2) {
+            var $tco_var_v1 = $copy_v1;
             var $tco_done1 = false;
             var $tco_result;
-            function $tco_loop(ctx, v1) {
-              if (v1 instanceof Leaf) {
+            function $tco_loop(v1, v2) {
+              if (v2 instanceof Leaf) {
                 $tco_done1 = true;
-                return up(ctx)(new KickUp(Leaf.value, k, v, Leaf.value));
+                return up(v1)(new KickUp(Leaf.value, k, v, Leaf.value));
               }
               ;
-              if (v1 instanceof Two) {
-                var v2 = compare2(k)(v1.value1);
-                if (v2 instanceof EQ) {
-                  $tco_done1 = true;
-                  return fromZipper1(ctx)(new Two(v1.value0, k, v, v1.value3));
-                }
-                ;
-                if (v2 instanceof LT) {
-                  $tco_var_ctx = new Cons(new TwoLeft(v1.value1, v1.value2, v1.value3), ctx);
-                  $copy_v1 = v1.value0;
-                  return;
-                }
-                ;
-                $tco_var_ctx = new Cons(new TwoRight(v1.value0, v1.value1, v1.value2), ctx);
-                $copy_v1 = v1.value3;
-                return;
-              }
-              ;
-              if (v1 instanceof Three) {
-                var v3 = compare2(k)(v1.value1);
+              if (v2 instanceof Two) {
+                var v3 = compare2(k)(v2.value1);
                 if (v3 instanceof EQ) {
                   $tco_done1 = true;
-                  return fromZipper1(ctx)(new Three(v1.value0, k, v, v1.value3, v1.value4, v1.value5, v1.value6));
-                }
-                ;
-                var v4 = compare2(k)(v1.value4);
-                if (v4 instanceof EQ) {
-                  $tco_done1 = true;
-                  return fromZipper1(ctx)(new Three(v1.value0, v1.value1, v1.value2, v1.value3, k, v, v1.value6));
+                  return fromZipper1(v1)(new Two(v2.value0, k, v, v2.value3));
                 }
                 ;
                 if (v3 instanceof LT) {
-                  $tco_var_ctx = new Cons(new ThreeLeft(v1.value1, v1.value2, v1.value3, v1.value4, v1.value5, v1.value6), ctx);
-                  $copy_v1 = v1.value0;
+                  $tco_var_v1 = new Cons(new TwoLeft(v2.value1, v2.value2, v2.value3), v1);
+                  $copy_v2 = v2.value0;
+                  return;
+                }
+                ;
+                $tco_var_v1 = new Cons(new TwoRight(v2.value0, v2.value1, v2.value2), v1);
+                $copy_v2 = v2.value3;
+                return;
+              }
+              ;
+              if (v2 instanceof Three) {
+                var v3 = compare2(k)(v2.value1);
+                if (v3 instanceof EQ) {
+                  $tco_done1 = true;
+                  return fromZipper1(v1)(new Three(v2.value0, k, v, v2.value3, v2.value4, v2.value5, v2.value6));
+                }
+                ;
+                var v4 = compare2(k)(v2.value4);
+                if (v4 instanceof EQ) {
+                  $tco_done1 = true;
+                  return fromZipper1(v1)(new Three(v2.value0, v2.value1, v2.value2, v2.value3, k, v, v2.value6));
+                }
+                ;
+                if (v3 instanceof LT) {
+                  $tco_var_v1 = new Cons(new ThreeLeft(v2.value1, v2.value2, v2.value3, v2.value4, v2.value5, v2.value6), v1);
+                  $copy_v2 = v2.value0;
                   return;
                 }
                 ;
                 if (v3 instanceof GT && v4 instanceof LT) {
-                  $tco_var_ctx = new Cons(new ThreeMiddle(v1.value0, v1.value1, v1.value2, v1.value4, v1.value5, v1.value6), ctx);
-                  $copy_v1 = v1.value3;
+                  $tco_var_v1 = new Cons(new ThreeMiddle(v2.value0, v2.value1, v2.value2, v2.value4, v2.value5, v2.value6), v1);
+                  $copy_v2 = v2.value3;
                   return;
                 }
                 ;
-                $tco_var_ctx = new Cons(new ThreeRight(v1.value0, v1.value1, v1.value2, v1.value3, v1.value4, v1.value5), ctx);
-                $copy_v1 = v1.value6;
+                $tco_var_v1 = new Cons(new ThreeRight(v2.value0, v2.value1, v2.value2, v2.value3, v2.value4, v2.value5), v1);
+                $copy_v2 = v2.value6;
                 return;
               }
               ;
-              throw new Error("Failed pattern match at Data.Map.Internal (line 478, column 3 - line 478, column 55): " + [ctx.constructor.name, v1.constructor.name]);
+              throw new Error("Failed pattern match at Data.Map.Internal (line 478, column 3 - line 478, column 55): " + [v1.constructor.name, v2.constructor.name]);
             }
             ;
             while (!$tco_done1) {
-              $tco_result = $tco_loop($tco_var_ctx, $copy_v1);
+              $tco_result = $tco_loop($tco_var_v1, $copy_v2);
             }
             ;
             return $tco_result;
@@ -4371,9 +4371,9 @@
   var concatMap = /* @__PURE__ */ flip(/* @__PURE__ */ bind(bindArray));
   var mapMaybe = function(f) {
     return concatMap(function() {
-      var $185 = maybe([])(singleton4);
-      return function($186) {
-        return $185(f($186));
+      var $187 = maybe([])(singleton4);
+      return function($188) {
+        return $187(f($188));
       };
     }());
   };
@@ -5079,9 +5079,9 @@
 
   // output/Data.List.NonEmpty/index.js
   var singleton5 = /* @__PURE__ */ function() {
-    var $199 = singleton2(plusList);
-    return function($200) {
-      return NonEmptyList($199($200));
+    var $200 = singleton2(plusList);
+    return function($201) {
+      return NonEmptyList($200($201));
     };
   }();
   var cons3 = function(y) {
@@ -5356,8 +5356,8 @@
       var diffProp = function(prevEvents, events) {
         return function(v, v1, v11, v2) {
           if (v11 instanceof Attribute && v2 instanceof Attribute) {
-            var $65 = v11.value2 === v2.value2;
-            if ($65) {
+            var $66 = v11.value2 === v2.value2;
+            if ($66) {
               return v2;
             }
             ;
@@ -5373,8 +5373,8 @@
             ;
             if (v2.value0 === "value") {
               var elVal = unsafeGetProperty("value", el);
-              var $74 = refEq2(elVal, v2.value1);
-              if ($74) {
+              var $75 = refEq2(elVal, v2.value1);
+              if ($75) {
                 return v2;
               }
               ;
@@ -5805,30 +5805,30 @@
     return function(b2) {
       return function(q2) {
         var foldl2 = function($copy_v) {
-          return function($copy_c) {
-            return function($copy_v1) {
+          return function($copy_v1) {
+            return function($copy_v2) {
               var $tco_var_v = $copy_v;
-              var $tco_var_c = $copy_c;
+              var $tco_var_v1 = $copy_v1;
               var $tco_done = false;
               var $tco_result;
-              function $tco_loop(v, c, v1) {
-                if (v1 instanceof Nil) {
+              function $tco_loop(v, v1, v2) {
+                if (v2 instanceof Nil) {
                   $tco_done = true;
-                  return c;
+                  return v1;
                 }
                 ;
-                if (v1 instanceof Cons) {
+                if (v2 instanceof Cons) {
                   $tco_var_v = v;
-                  $tco_var_c = v(c)(v1.value0);
-                  $copy_v1 = v1.value1;
+                  $tco_var_v1 = v(v1)(v2.value0);
+                  $copy_v2 = v2.value1;
                   return;
                 }
                 ;
-                throw new Error("Failed pattern match at Data.CatList (line 124, column 3 - line 124, column 59): " + [v.constructor.name, c.constructor.name, v1.constructor.name]);
+                throw new Error("Failed pattern match at Data.CatList (line 124, column 3 - line 124, column 59): " + [v.constructor.name, v1.constructor.name, v2.constructor.name]);
               }
               ;
               while (!$tco_done) {
-                $tco_result = $tco_loop($tco_var_v, $tco_var_c, $copy_v1);
+                $tco_result = $tco_loop($tco_var_v, $tco_var_v1, $copy_v2);
               }
               ;
               return $tco_result;
@@ -5878,8 +5878,8 @@
     ;
     if (v instanceof CatCons) {
       return new Just(new Tuple(v.value0, function() {
-        var $65 = $$null2(v.value1);
-        if ($65) {
+        var $66 = $$null2(v.value1);
+        if ($66) {
           return CatNil.value;
         }
         ;
@@ -7607,8 +7607,8 @@
     var lightness = toString(v.value2 * 100) + "%";
     var hue = toString(v.value0);
     var alpha = show2(v.value3);
-    var $113 = v.value3 === 1;
-    if ($113) {
+    var $118 = v.value3 === 1;
+    if ($118) {
       return "hsl(" + (hue + (", " + (saturation + (", " + (lightness + ")")))));
     }
     ;

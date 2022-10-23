@@ -25,7 +25,7 @@ to generate this file without the comments in this block.
   , "maybe"
   , "numbers"
   , "prelude"
-  , "sized-vectors"
+  -- , "sized-vectors"
   , "tailrec"
   , "tuples"
   ]
