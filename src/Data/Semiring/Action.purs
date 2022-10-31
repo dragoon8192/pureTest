@@ -16,7 +16,7 @@ import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Dual (Dual(..))
 import Data.Unit (Unit(..), unit)
 
--- | A semiring `a` acting on a semimodule (a commutative monoid`x`).
+-- | A semiring `a` acting on a semimodule (a monoid`x`).
 -- | Instances must satisfy the following laws in addition to the `Semiring` laws:
 -- |
 -- | - Identity: `forall x. lact one x = x`
