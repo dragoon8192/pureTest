@@ -5,8 +5,6 @@ module Data.Ring.Action
   ) where
 
 import Data.Ring (class Ring)
-import Data.Monoid.Additive (Additive)
-import Data.Unit (Unit)
 
 import Data.Semiring.Action
   ( class LeftAction
@@ -24,10 +22,5 @@ class (Semiring.LeftAction a x, Ring a) <= LeftAction a x
 
 class (Semiring.RightAction a x, Ring a) <= RightAction a x
 
-instance leftActionRingActingOnItself :: Ring a => LeftAction a (Additive a)
-
-instance rightActionRingActingOnItself :: Ring a => RightAction a (Additive a)
-
-instance leftActionUnit :: Ring a => LeftAction a Unit
-
-instance rightActionUnit :: Ring a => RightAction a Unit
+instance leftActionAuto :: (Semiring.LeftAction a x, Ring a) => LeftAction a x
+instance rightActionAuto :: (Semiring.RightAction a x, Ring a) => RightAction a x
