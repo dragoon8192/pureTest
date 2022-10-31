@@ -31,7 +31,7 @@ import Data.Unit (Unit, unit)
 class (Semiring a, Monoid x) <= LeftAction a x where
   lact :: a -> x -> x
 
--- | A semiring `a` acting on a semimodule (a commutative monoid`x`).
+-- | A semiring `a` acting on a semimodule (a monoid`x`).
 -- | Instances must satisfy the following laws in addition to the `Semiring` laws:
 -- |
 -- | - Identity: `forall x. ract one x = x`
