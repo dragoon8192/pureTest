@@ -9,12 +9,11 @@ module Data.Semiring.Action
   ) where
 
 import Data.Function (flip, ($))
-import Data.Functor (class Functor, map)
 import Data.Semiring (class Semiring, (*))
 import Data.Monoid (class Monoid)
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Dual (Dual(..))
-import Data.Unit (Unit(..), unit)
+import Data.Unit (Unit, unit)
 
 -- | A semiring `a` acting on a semimodule (a monoid`x`).
 -- | Instances must satisfy the following laws in addition to the `Semiring` laws:
