@@ -21,13 +21,13 @@ import Data.Semiring.Action
 -- | A ring `a` acting on a module (a monoid`x`).
 -- | Instances automatically satisfies the following laws in addition to the `Semiring Action` laws:
 -- |
--- | - Inverse: `forall a b x. lact (- a) x = ginverse $ lact a x
+-- | - Inverse: `forall a b x. lact (- a) x = ginverse $ lact a x`
 class (Semiring.LeftAction a x, Ring a) <= LeftAction a x
 
 -- | A ring `a` acting on a module (a monoid`x`).
 -- | Instances automatically satisfies the following laws in addition to the `Semiring Action` laws:
 -- |
--- | - Inverse: `forall a b x. ract (- a) x = - ract a x
+-- | - Inverse: `forall a b x. ract (- a) x = ginverse $ ract a x`
 class (Semiring.RightAction a x, Ring a) <= RightAction a x
 
 instance leftActionAuto :: (Semiring.LeftAction a x, Ring a) => LeftAction a x
