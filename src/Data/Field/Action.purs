@@ -1,8 +1,6 @@
 module Data.Field.Action
   ( class LeftAction
   , class RightAction
-  , module Data.EuclideanRing.Action
-  , module Data.DivisionRing.Action
   ) where
 
 import Data.Field (class Field)
