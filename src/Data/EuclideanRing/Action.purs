@@ -5,9 +5,6 @@ module Data.EuclideanRing.Action
   ) where
 
 import Data.EuclideanRing (class EuclideanRing)
-import Data.Monoid.Additive (Additive)
-import Data.Unit (Unit)
-
 import Data.CommutativeRing.Action
   ( class LeftAction
   , class RightAction
@@ -24,10 +21,5 @@ class (CommutativeRing.LeftAction a x, EuclideanRing a) <= LeftAction a x
 
 class (CommutativeRing.RightAction a x, EuclideanRing a) <= RightAction a x
 
-instance leftActionEuclideanRingActingOnItself :: EuclideanRing a => LeftAction a (Additive a)
-
-instance rightActionEuclideanRingActingOnItself :: EuclideanRing a => RightAction a (Additive a)
-
-instance leftActionUnit :: EuclideanRing a => LeftAction a Unit
-
-instance rightActionUnit :: EuclideanRing a => RightAction a Unit
+instance leftActionAuto :: (CommutativeRing.LeftAction a x, EuclideanRing a) => LeftAction a x
+instance rightActionAuto :: (CommutativeRing.RightAction a x, EuclideanRing a) => RightAction a x
