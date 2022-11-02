@@ -1,33 +1,24 @@
 module Data.Field.Action
   ( class LeftAction
   , class RightAction
-  , module Data.Ring.Action
+  , module Data.EuclideanRing.Action
+  , module Data.DivisionRing.Action
   ) where
 
 import Data.Field (class Field)
-import Data.Monoid.Additive (Additive)
-import Data.Unit (Unit)
-
-import Data.Ring.Action
+import Data.EuclideanRing.Action
   ( class LeftAction
   , class RightAction
-  ) as RingAct
-import Data.Ring.Action
-  ( lact
-  , ract
-  , flipRact
-  , (<^)
-  , (^>)
-  )
+  ) as EuclideanRing
+import Data.DivisionRing.Action
+  ( class LeftAction
+  , class RightAction
+  ) as DivisionRing
 
-class (RingAct.LeftAction a x, Field a) <= LeftAction a x
 
-class (RingAct.RightAction a x, Field a) <= RightAction a x
+class (EuclideanRing.LeftAction a x, DivisionRing.LeftAction a x, Field a) <= LeftAction a x
 
-instance leftActionFieldActingOnItself :: Field a => LeftAction a (Additive a)
+class (EuclideanRing.RightAction a x, DivisionRing.RightAction a x, Field a) <= RightAction a x
 
-instance rightActionFieldActingOnItself :: Field a => RightAction a (Additive a)
-
-instance leftActionUnit :: Field a => LeftAction a Unit
-
-instance rightActionUnit :: Field a => RightAction a Unit
+instance leftActionAuto :: (EuclideanRing.LeftAction a x, DivisionRing.LeftAction a x, Field a) => LeftAction a x
+instance rightActionAuto :: (EuclideanRing.RightAction a x, DivisionRing.RightAction a x, Field a) => RightAction a x
